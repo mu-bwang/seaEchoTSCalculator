@@ -120,13 +120,6 @@ For detailed usage instructions, see:
 - Inline code documentation and docstrings
 - Test files in `tests/` directory for usage examples
 
-## Contributing
-
-The project follows a modular structure with:
-- Consistent import patterns using relative imports
-- Standardized I/O utilities in each module's `core/` directory
-- Centralized testing in `tests/` directory
-- Professional plotting standards across all outputs
 
 ---
 
