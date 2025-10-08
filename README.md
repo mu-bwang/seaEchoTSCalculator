@@ -64,30 +64,6 @@ seaEchoTSCalculator/
     └── SeaEcho_water.py             # Seawater properties
 ```
 
-## Features
-
-### Bubble Module
-- **7 Validated Models**: Medwin-Clay, Breathing, Ainslie-Leighton, Anderson-Weston, Weston-Medwin, Thuraisingham, and Modal Solution
-- **Environmental Parameters**: Temperature, salinity, depth, pressure, and pH effects
-- **Frequency Analysis**: Calculate TS across wide frequency ranges (0.1-1000 kHz)
-- **Size Analysis**: Study bubble diameter effects on TS (1-5 mm range)
-- **Model Comparisons**: Side-by-side analysis of different theoretical approaches
-- **Environmental Sensitivity**: Analyze effects of oceanic conditions
-
-### SolidSphere Module  
-- **Material Support**: Tungsten Carbide, Copper, and extensible framework for other materials
-- **Frequency Analysis**: TS calculations across acoustic frequency ranges
-- **Size Comparisons**: Multiple sphere radii analysis
-- **Material Comparisons**: Side-by-side TS analysis for different materials
-- **High-Precision Calculations**: Using arbitrary-precision mathematics for accuracy
-
-### Validation Suite
-- **8 Jupyter Notebooks**: Comprehensive scientific validation against literature
-- **Reference Comparisons**: Weber et al. (2014), Ainslie & McColm (1998), Medwin & Clay (1998)
-- **Physics Validation**: Absorption coefficients, resonance frequencies, damping constants
-- **Environmental Models**: Seawater density and acoustic parameter validation
-- **Interactive Analysis**: Bubble ka-analysis and high-frequency model comparisons
-
 ## Installation
 
 ### Requirements
@@ -163,14 +139,9 @@ All outputs are centrally organized:
 - Consistent formatting across all outputs
 - 6×4 inch format optimized for publications
 
-### Example Outputs
-- **Bubble examples**: Individual `data/` and `plots/` subdirectories
-- **SolidSphere examples**: Individual `data/` and `plots/` subdirectories
-- **Validation**: Results saved to main `/data/` and `/plots/` directories
 
-## Validation & Scientific Accuracy
 
-### Comprehensive Validation Suite
+### Validation Suite
 The package includes extensive validation against peer-reviewed literature:
 
 - **Weber et al. (2014)**: Bubble target strength in Gulf of Mexico conditions
@@ -194,58 +165,6 @@ python tests/test_bubble.py                   # Bubble-specific tests
 python tests/test_solid_sphere.py             # Solid sphere tests
 python tests/test_utils.py                    # Utility function tests
 ```
-
-## Dependencies & Architecture
-
-### Core Dependencies
-- **NumPy**: Numerical computations and array operations
-- **MPmath**: Arbitrary-precision mathematics for solid sphere calculations
-- **Matplotlib**: Professional-quality plotting and visualization  
-- **Pandas**: Data handling, CSV export, and analysis
-
-### Modular Architecture
-- **Centralized utilities**: Common physics models in `/utils/`
-- **Specialized modules**: Separate `Bubble/` and `SolidSphere/` implementations
-- **Consistent I/O**: Standardized plotting and data export across modules
-- **Validation-driven**: Scientific accuracy verified through extensive validation
-- **Publication-ready**: All outputs formatted for scientific publication
-
-## Scientific Applications
-
-### Oceanographic Research
-- Methane bubble detection and quantification
-- Underwater acoustic scattering analysis
-- Environmental monitoring applications
-
-### Sonar and Acoustics
-- Target strength predictions for detection systems
-- Acoustic scattering cross-section calculations
-- Multi-frequency analysis capabilities
-
-### Material Science
-- Solid sphere scattering for material characterization
-- Acoustic property determination
-- Comparative material analysis
-
-## Documentation & Usage
-
-### Interactive Documentation
-- **Jupyter notebooks**: Step-by-step validation and analysis
-- **Example scripts**: Ready-to-run demonstrations
-- **Inline documentation**: Comprehensive docstrings and comments
-
-### Scientific References
-All models implemented based on peer-reviewed literature with full citation tracking and validation against original publications.
-
-## Contributing
-
-The project follows scientific software development best practices:
-- Modular design with clear separation of concerns
-- Comprehensive testing and validation
-- Consistent coding standards and documentation
-- Version-controlled development with Git
-- Publication-quality output standards
-
 ---
 
 **Note**: All calculations validated against peer-reviewed literature. See validation notebooks for detailed comparisons and scientific accuracy verification.
