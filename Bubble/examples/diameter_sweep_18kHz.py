@@ -2,10 +2,10 @@
 Bubble Diameter Sweep at Fixed Frequency (18 kHz)
 
 This script analyzes the acoustic target strength of gas bubbles with diameters
-ranging from 0.2 to 6.0 mm at a fixed frequency of 18 kHz. 
+ranging from 0.2 to 10.0 mm at a fixed frequency of 18 kHz. 
 
 Parameters:
-    - Bubble diameters: 0.2 to 6.0 mm (20 steps)
+    - Bubble diameters: 0.2 to 10.0 mm (100 steps)
     - Frequency: 18 kHz (fixed)
     - Temperature: 8.0°C
     - Salinity: 35.0 PSU
@@ -13,8 +13,8 @@ Parameters:
     - Model: Medwin_Clay 
 
 Output:
-    - PNG plot: bubble_diameter_sweep_18kHz_YYYYMMDD_HHMMSS.png
-    - CSV data: bubble_diameter_sweep_18kHz_YYYYMMDD_HHMMSS.csv
+    - PNG plot
+    - CSV data
 
 
 """
@@ -31,14 +31,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from core.io_utils import save_figure
 from core.processor import run_calculations
 
-def main():
-    """
-    Calculate and plot target strength vs bubble diameter at 18 kHz.
-    """
-
-# Analysis parameters  
-frequency = 18.0  # kHz - appropriate for larger bubbles (0.2-6 mm)
-diameters = np.linspace(0.2e-3, 6e-3, 20)  # 0.2-6 mm, 20 points
+# Analysis parameters
+frequency = 18.0  # kHz - appropriate for larger bubbles (0.2-10 mm)
+diameters = np.linspace(0.2e-3, 10e-3, 100)  # 0.2-10 mm, 100 points
 models = ["Medwin_Clay"]  # Medwin-Clay scattering model
 T = 8.0         # temperature: 8°C
 S = 35.0        # salinity: 35 PSU
@@ -78,32 +73,33 @@ def main() -> None:
         ts_value = results["results"]["ts"][models[0]][0]  # First (and only) frequency
         target_strengths.append(ts_value)
         
-        if (i + 1) % 5 == 0:  # Progress indicator
+        if (i + 1) % 10 == 0:  # Progress indicator (every 10 calculations)
             print(f"  Completed {i + 1}/{len(diameters_mm)} calculations...")
     
     # Convert to arrays for plotting
     target_strengths = np.array(target_strengths)
     
-    # Debug: Print the target strength values
-    print(f"\nTarget strength values:")
-    for i, (d, ts) in enumerate(zip(diameters_mm, target_strengths)):
-        print(f"  {d:.1f} mm: {ts:.2f} dB")
-    print(f"Min TS: {np.min(target_strengths):.2f} dB")
-    print(f"Max TS: {np.max(target_strengths):.2f} dB")
-    print(f"Any NaN values: {np.isnan(target_strengths).any()}")
-    print(f"Any infinite values: {np.isinf(target_strengths).any()}")
+    # Summary statistics
+    print(f"\nCalculation Summary:")
+    print(f"Total calculations: {len(target_strengths)}")
+    print(f"Target strength range: {np.min(target_strengths):.2f} to {np.max(target_strengths):.2f} dB")
     
-    # Create timestamp for file naming
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    # Show first few and last few results
+    print(f"\nSample results (first 5):")
+    for i in range(min(5, len(target_strengths))):
+        print(f"  {diameters_mm[i]:.1f} mm: {target_strengths[i]:.2f} dB")
+        
+    if len(target_strengths) > 5:
+        print(f"Sample results (last 5):")
+        for i in range(max(0, len(target_strengths)-5), len(target_strengths)):
+            print(f"  {diameters_mm[i]:.1f} mm: {target_strengths[i]:.2f} dB")
     
     # Create the plot
-    plt.figure(figsize=(6,4))
+    plt.figure(figsize=(6,4.5))  # Larger figure for 10mm range
     
-    # Main plot
-    plt.plot(diameters_mm, target_strengths, 'b-', linewidth=2.5, marker='o', 
-             markersize=6, markerfacecolor='lightblue', markeredgecolor='blue', 
-             markeredgewidth=1.5)
-    
+    # Main plot - all data should be valid now
+    plt.plot(diameters_mm, target_strengths, color="#1f77b4", linestyle='-', linewidth=2.5)
+
     # Formatting
     plt.xlabel('Bubble Diameter (mm)', fontsize=14)
     plt.ylabel('Target Strength (dB)', fontsize=14)
@@ -111,9 +107,13 @@ def main() -> None:
     plt.grid(True, alpha=0.3, linestyle='-', linewidth=0.5)
     
     # Set axis limits and ticks to fit data nicely
-    plt.xlim(0.0, 6.2)  # Slightly beyond data range for nice appearance
-    plt.ylim(-110, -35)  # Expanded to include all data from -102.74 to -38.17 dB
-    plt.xticks(np.arange(0, 7, 1), fontsize=14)
+    ts_min, ts_max = np.min(target_strengths), np.max(target_strengths)
+    ts_range = ts_max - ts_min
+    y_margin = max(5, ts_range * 0.1)  # At least 5 dB margin
+    plt.ylim(ts_min - y_margin, ts_max + y_margin)
+    
+    plt.xlim(0.0, 10.5)  # Updated to accommodate 10mm max diameter
+    plt.xticks(np.arange(0, 11, 1), fontsize=14)  # 0, 1, 2, ..., 10 mm
     plt.yticks(fontsize=14)
 
     # Add model information text box (no background) - lower right corner
@@ -129,13 +129,13 @@ def main() -> None:
     plt.tight_layout()
     
     # Save plot
-    plot_filename = f'bubble_diameter_sweep_{int(frequency_khz)}kHz_{timestamp}.png'
+    plot_filename = f'bubble_diameter_sweep_{int(frequency_khz)}kHz.pdf'
     plot_path = os.path.join('plots', plot_filename)
     os.makedirs('plots', exist_ok=True)
     plt.savefig(plot_path, dpi=300, bbox_inches='tight')
     
     # Save data to CSV
-    csv_filename = f'bubble_diameter_sweep_{int(frequency_khz)}kHz_{timestamp}.csv'
+    csv_filename = f'bubble_diameter_sweep_{int(frequency_khz)}kHz.csv'
     csv_path = os.path.join('data', csv_filename)
     os.makedirs('data', exist_ok=True)
     

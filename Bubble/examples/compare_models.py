@@ -22,8 +22,8 @@ Analysis details:
 • Saves timestamped PNG & CSV files (no overwrites)
 
 Output files:
-• PNG → examples/plots/compare_models_YYYYMMDD_HHMMSS.png
-• CSV → examples/data/compare_models_results_YYYYMMDD_HHMMSS.csv
+• PNG 
+• CSV 
 """
 
 from __future__ import annotations
@@ -34,21 +34,21 @@ from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 PROJECT_ROOT = Path(__file__).resolve().parents[1]  # …/Bubble
+MAIN_ROOT = Path(__file__).resolve().parents[2]     # …/seaEchoTSCalculator
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
+if str(MAIN_ROOT) not in sys.path:
+    sys.path.insert(0, str(MAIN_ROOT))
 
 # local helpers
 from core.io_utils import export_results_csv, save_figure  # noqa: E402
 from core.processor import run_calculations                 # noqa: E402
 
-# output directories
-FIG_DIR = Path(__file__).parent / "plots"
-CSV_DIR = Path(__file__).parent / "data"
+# output directories - use main project plots and data folders
+FIG_DIR = MAIN_ROOT / "plots"
+CSV_DIR = MAIN_ROOT / "data"
 FIG_DIR.mkdir(parents=True, exist_ok=True)
 CSV_DIR.mkdir(parents=True, exist_ok=True)
-
-# timestamp for filenames
-STAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
 
 # User-configurable parameters for bubble scattering analysis
 params = {
@@ -87,16 +87,16 @@ def main() -> None:
     ax.tick_params(axis='both', which='major', labelsize=11)  # Increase tick label size
     fig.tight_layout()
 
-    # Save results with timestamped filenames (prevents overwrites)
-    csv_path = CSV_DIR / f"compare_models_results_{STAMP}.csv"
-    fig_path = FIG_DIR / f"compare_models_{STAMP}.png"
+    # Save results with descriptive filenames
+    csv_path = CSV_DIR / "compare_models_results.csv"
+    fig_path = FIG_DIR / "compare_models.pdf"
     export_results_csv(results, csv_path)
     save_figure(fig, fig_path)
 
     # Display output paths relative to project root
     print(f"Results saved:")
-    print(f"CSV → {csv_path.relative_to(PROJECT_ROOT)}")
-    print(f"PNG → {fig_path.relative_to(PROJECT_ROOT)}")
+    print(f"CSV → {csv_path.relative_to(MAIN_ROOT)}")
+    print(f"PNG → {fig_path.relative_to(MAIN_ROOT)}")
     
     # Show the plot
     plt.show()

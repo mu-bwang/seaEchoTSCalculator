@@ -47,12 +47,12 @@ try:
     print(f"    Specific heat capacity = {bubble.Cp:.3f} kJ/(kg·K)")
     print(f"    Thermal conductivity = {bubble.K_th:.6f} W/(m·K)")
     
-    # Test SeaEcho_bubble_resonance
-    from utils.SeaEcho_bubble_resonance import resonance_freq, damping_constant
+    # Test SeaEcho_acoustic_paras
+    from utils.SeaEcho_acoustic_paras import resonance_freq, damping_constant
     f_b, f_R, corrections = resonance_freq(f=50, c=water.c, water=water, bubble=bubble)
     damping = damping_constant(f=50, c=water.c, water=water, bubble=bubble)
-    print(f"✅ SeaEcho_bubble_resonance: Resonance freq = {float(f_R):.1f} Hz")
-    print(f"✅ SeaEcho_bubble_resonance: Damping = {float(damping):.6f}")
+    print(f"✅ SeaEcho_acoustic_paras: Resonance freq = {float(f_R):.1f} Hz")
+    print(f"✅ SeaEcho_acoustic_paras: Damping = {float(damping):.6f}")
     
     print("\n🎉 All utils files working properly!")
     

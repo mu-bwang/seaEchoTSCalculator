@@ -48,9 +48,9 @@ if str(MAIN_ROOT) not in sys.path:
 from core.io_utils import export_results_csv, save_figure 
 from core.processor import run_calculations                 
 
-# output directories
-FIG_DIR = Path(__file__).parent / "plots"
-CSV_DIR = Path(__file__).parent / "data"
+# output directories - use main project plots and data folders
+FIG_DIR = MAIN_ROOT / "plots"
+CSV_DIR = MAIN_ROOT / "data"
 FIG_DIR.mkdir(parents=True, exist_ok=True)
 CSV_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -103,15 +103,15 @@ def main() -> None:
     plt.show()
 
     # Save files with descriptive names
-    csv_path = CSV_DIR / f"2mm_bubble_frequency_sweep_{STAMP}.csv"
-    fig_path = FIG_DIR / f"2mm_bubble_frequency_sweep_{STAMP}.png"
+    csv_path = CSV_DIR / "2mm_bubble_frequency_sweep.csv"
+    fig_path = FIG_DIR / "2mm_bubble_frequency_sweep.pdf"
     
     export_results_csv(results, csv_path)
     save_figure(fig, fig_path)
 
     print(f"\nResults saved:")
-    print(f"CSV  → {csv_path.relative_to(PROJECT_ROOT)}")
-    print(f"PNG  → {fig_path.relative_to(PROJECT_ROOT)}")
+    print(f"CSV  → {csv_path.relative_to(MAIN_ROOT)}")
+    print(f"PNG  → {fig_path.relative_to(MAIN_ROOT)}")
 
 if __name__ == "__main__":
     main()

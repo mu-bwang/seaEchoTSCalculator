@@ -49,14 +49,11 @@ if str(MAIN_ROOT) not in sys.path:
 from core.io_utils import save_figure  # noqa: E402
 from core.processor import run_calculations   # noqa: E402
 
-# output directories
-FIG_DIR = Path(__file__).parent / "plots"
-CSV_DIR = Path(__file__).parent / "data"
+# output directories - use main project plots and data folders
+FIG_DIR = MAIN_ROOT / "plots"
+CSV_DIR = MAIN_ROOT / "data"
 FIG_DIR.mkdir(parents=True, exist_ok=True)
 CSV_DIR.mkdir(parents=True, exist_ok=True)
-
-# Timestamp for filenames
-STAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
 
 # Analysis parameters
 frequencies = np.logspace(np.log10(1.0), np.log10(1200.0), 2000)  # 1-1200 kHz, 2000 points
@@ -129,17 +126,17 @@ def main() -> None:
     plt.show()
 
     # Save figure with descriptive name
-    fig_path = FIG_DIR / f"multi_bubble_frequency_sweep_{STAMP}.png"
+    fig_path = FIG_DIR / "multi_bubble_frequency_sweep.pdf"
     save_figure(fig, fig_path)
 
     # Save combined CSV with descriptive name
     df = pd.DataFrame(rows)
-    csv_path = CSV_DIR / f"multi_bubble_frequency_sweep_{STAMP}.csv"
+    csv_path = CSV_DIR / "multi_bubble_frequency_sweep.csv"
     df.to_csv(csv_path, index=False)
 
     print(f"\nResults saved:")
-    print(f"PNG → {fig_path.relative_to(PROJECT_ROOT)}")
-    print(f"CSV → {csv_path.relative_to(PROJECT_ROOT)}")
+    print(f"PNG → {fig_path.relative_to(MAIN_ROOT)}")
+    print(f"CSV → {csv_path.relative_to(MAIN_ROOT)}")
 
 if __name__ == "__main__":
     main()

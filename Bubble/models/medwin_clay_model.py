@@ -4,7 +4,7 @@ import os
 
 # Add parent directory to path to access utils
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from utils.SeaEcho_bubble_resonance import resonance_freq, damping_constant
+from utils.SeaEcho_acoustic_paras import resonance_freq, damping_constant
 
 def calculate_medwin_clay_ts(f, c, water, bubble):
     """
@@ -46,16 +46,26 @@ def calculate_medwin_clay_ts(f, c, water, bubble):
     """
     a = bubble.d / 2  # Bubble radius (m)
 
-    # Compute resonance frequency and damping constant
+    # Compute resonance frequency and damping constant using existing functions
     f_b, f_R, correction_params = resonance_freq(f, c, water, bubble)
     delta = damping_constant(f, c, water, bubble)
-
-    # Scattering cross-section
-    sigma_bs = a**2 / (
-        (f_R / (f * 1e3) - 1)**2 + delta**2
-    )
-
-    # Target Strength (TS)
-    TS = 10 * np.log10(sigma_bs)
+    
+    # Smart frequency selection: use f_R if valid, fallback to f_b if f_R is NaN
+    if np.isnan(f_R):
+        # Fallback to uncorrected frequency when corrections fail
+        freq_to_use = f_b
+        # Also use simplified damping when thermal corrections fail
+        omega = 2 * np.pi * f * 1000  # radians/sec  
+        delta_r = omega * a / c  # Re-radiation damping
+        delta_nu = 4 * water.mu / (water.rho * omega * a**2)  # Viscous damping
+        delta_fallback = delta_r + delta_nu  # Simplified damping
+        delta_to_use = delta_fallback if np.isnan(delta) else delta
+    else:
+        # Use corrected frequency when available
+        freq_to_use = f_R
+        delta_to_use = delta
+    
+    # Target Strength using selected frequency and damping
+    TS = 10 * np.log10(a**2 / ((freq_to_use/(f*1e3)-1)**2 + delta_to_use**2))
     return TS
 

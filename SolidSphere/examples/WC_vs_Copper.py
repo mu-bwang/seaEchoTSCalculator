@@ -83,12 +83,11 @@ def main():
         "Tungsten Carbide": TS_WC.tolist(),
         "Copper": TS_copper.tolist()
     }
-    # Save plot in the current examples directory
-    current_dir = Path(__file__).parent
-    plot_filename = current_dir / "WC_vs_Copper_comparison.png"
+    # Save plot to main project plots directory
+    plot_filename = MAIN_ROOT / "plots" / "WC_vs_Copper_comparison.pdf"
     plot_ts_vs_frequency(sonar_frequencies, ts_results, radius_mm, labels=None,
                         filename=plot_filename, show_plot=True, save_plot=True)
-    print(f"\nPlot saved as WC_vs_Copper_comparison.png in the examples directory")
+    print(f"\nPlot saved as WC_vs_Copper_comparison.pdf in the main plots directory")
     print("Plot window should be displayed - close it to continue.")
     print(f"\nComparison Summary at {radius_mm} mm radius:")
     print(f"Frequency range: {sonar_frequencies[0]:.0f} - {sonar_frequencies[-1]:.0f} kHz")

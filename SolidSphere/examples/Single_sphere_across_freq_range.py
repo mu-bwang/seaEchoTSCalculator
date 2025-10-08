@@ -79,12 +79,11 @@ def main():
 
     # Create plot using plot_utils
     ts_results = {"WC Sphere": TS.tolist()}
-    # Save plot in the current examples directory
-    current_dir = Path(__file__).parent
-    plot_filename = current_dir / "WC_sphere_results.png"
+    # Save plot to main project plots directory
+    plot_filename = MAIN_ROOT / "plots" / "WC_sphere_results.pdf"
     plot_ts_vs_frequency(sonar_frequencies, ts_results, radius_mm, labels=None,
                         filename=plot_filename, show_plot=True, save_plot=True)
-    print(f"\nPlot saved as WC_sphere_results.png in the examples directory")
+    print(f"\nPlot saved as WC_sphere_results.pdf in the main plots directory")
     print("Plot window should be displayed - close it to continue.")
 
 

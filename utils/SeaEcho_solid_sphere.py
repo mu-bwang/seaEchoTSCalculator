@@ -27,5 +27,29 @@ class Copper:
     """
     def __init__(self):
         self.rho = 8940       # kg/m^3
-        self.c_lon = 4660     # m/s  (4.66 mm/µs)
+        self.c_lon = 4660     # m/s  
         self.c_trans = 2325   # m/s
+
+class Aluminum:
+    """
+    Properties of aluminum.
+
+    Sources:
+    - Target Strength Package V1.1 
+    """
+    def __init__(self):
+        self.rho = 2700       # kg/m^3
+        self.c_lon = 6260     # m/s  
+        self.c_trans = 3080   # m/s
+
+class Stainless_steel:
+    """
+    Properties of stainless steel.
+
+    Sources:
+    - Target Strength Package V1.1 
+    """
+    def __init__(self):
+        self.rho = 7800       # kg/m^3
+        self.c_lon = 5610     # m/s  
+        self.c_trans = 3120   # m/s

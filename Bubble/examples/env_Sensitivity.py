@@ -21,8 +21,8 @@ Scientific context:
 • Results show how environmental conditions shift resonance peaks
 
 Output files:
-• PNG → examples/plots/env_sensitivity_YYYYMMDD_HHMMSS.png
-• CSV → examples/data/env_sensitivity_results_YYYYMMDD_HHMMSS.csv
+• PNG 
+• CSV 
 """
 
 from __future__ import annotations
@@ -36,21 +36,21 @@ import pandas as pd
 
 # Project structure and imports
 PROJECT_ROOT = Path(__file__).resolve().parents[1]  # …/Bubble
+MAIN_ROOT = Path(__file__).resolve().parents[2]     # …/seaEchoTSCalculator
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
+if str(MAIN_ROOT) not in sys.path:
+    sys.path.insert(0, str(MAIN_ROOT))
 
 # Local helpers and core functionality
 from core.io_utils import save_figure                 # noqa: E402
 from core.processor import run_calculations           # noqa: E402
 
-# Output directories
-FIG_DIR = Path(__file__).parent / "plots"
-CSV_DIR = Path(__file__).parent / "data"
+# Output directories - use main project plots and data folders
+FIG_DIR = MAIN_ROOT / "plots"
+CSV_DIR = MAIN_ROOT / "data"
 FIG_DIR.mkdir(parents=True, exist_ok=True)
 CSV_DIR.mkdir(parents=True, exist_ok=True)
-
-# Timestamp for filenames
-STAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
 
 # User-configurable parameters for environmental sensitivity analysis
 params_config = {
@@ -120,9 +120,9 @@ def main() -> None:
     ax.tick_params(axis='both', which='major', labelsize=10)
     fig.tight_layout()
 
-    # Save results with timestamped filenames (prevents overwrites)
-    fig_path = FIG_DIR / f"env_sensitivity_{STAMP}.png"
-    csv_path = CSV_DIR / f"env_sensitivity_results_{STAMP}.csv"
+    # Save results with descriptive filenames
+    fig_path = FIG_DIR / "env_sensitivity.pdf"
+    csv_path = CSV_DIR / "env_sensitivity_results.csv"
     
     # Save figure
     save_figure(fig, fig_path)
@@ -133,8 +133,8 @@ def main() -> None:
 
     # Display output paths relative to project root
     print(f"Results saved:")
-    print(f"CSV → {csv_path.relative_to(PROJECT_ROOT)}")
-    print(f"PNG → {fig_path.relative_to(PROJECT_ROOT)}")
+    print(f"CSV → {csv_path.relative_to(MAIN_ROOT)}")
+    print(f"PNG → {fig_path.relative_to(MAIN_ROOT)}")
     
     # Show the plot
     plt.show()
