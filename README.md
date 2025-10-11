@@ -120,7 +120,7 @@ jupyter notebook validation/
 # - medwin_clay_validation.ipynb              # Medwin & Clay (1998) validation
 # - seawater_density_validation.ipynb         # Seawater physics validation
 # - high_frequency_validation.ipynb           # High-frequency model comparison
-# - bubble_1mm_ka_analysis.ipynb             # Dimensionless analysis
+# - TS_non_dimensional_plot.ipynb             # Dimensionless analysis
 # - wc_sphere_*mm_validation.ipynb           # Solid sphere validation
 ```
 
