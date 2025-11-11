@@ -1,4 +1,4 @@
-# models/anderson_weston_model.py
+# models/andreeva__weston_model.py
 
 import numpy as np
 import sys

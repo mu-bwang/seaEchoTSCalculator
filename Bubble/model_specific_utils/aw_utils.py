@@ -8,7 +8,7 @@ def compute_resonance_frequency(gamma, P_0, rho_0, R_0):
 
 def compute_damping_factors(gamma, mu, rho_0, R_0, D):
     """Compute damping factors (viscous, thermal, and total)."""
-    beta_viscous = 4 * mu / (rho_0 * R_0**2)
+    beta_viscous = 2 * mu / (rho_0 * R_0**2)
     beta_thermal = (3 * (gamma - 1) / gamma) * (D / (R_0**2))
     beta_0 = beta_viscous + beta_thermal
     return beta_viscous, beta_thermal, beta_0

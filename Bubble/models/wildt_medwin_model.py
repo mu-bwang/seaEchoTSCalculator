@@ -1,4 +1,4 @@
-# models/weston_medwin_model.py
+# models/wildt_medwin_model.py
 
 import numpy as np
 import sys
