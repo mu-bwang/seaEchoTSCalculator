@@ -11,7 +11,7 @@ from model_specific_utils.aw_utils import compute_resonance_frequency, compute_d
 
 def calculate_aw_ts(f, c, water, bubble):
     """
-    Compute Target Strength (TS) using the Anderson-Weston model.
+    Compute Target Strength (TS) using the Andreeva-Weston model.
 
     Parameters:
     -----------

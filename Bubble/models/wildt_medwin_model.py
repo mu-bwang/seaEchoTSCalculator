@@ -10,7 +10,7 @@ from model_specific_utils.wm_utils import compute_resonance_frequency,compute_da
 
 def calculate_wm_ts(f, c, water, bubble):
     """
-    Compute Target Strength (TS) using the Weston-Medwin model.
+    Compute Target Strength (TS) using the Wildt-Medwin model.
 
     Parameters:
     -----------

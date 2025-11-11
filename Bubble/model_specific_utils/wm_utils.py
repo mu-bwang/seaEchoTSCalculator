@@ -18,7 +18,7 @@ def compute_dimensionless_correction(omega, R_0, c):
     return (omega * R_0) / c
 
 def compute_scattering_cross_section_WM(omega, omega_0, beta_0, epsilon, R_0):
-    """Compute scattering cross-section for Weston-Medwin model."""
+    """Compute scattering cross-section for Wildt-Medwin model."""
     numerator = 4 * np.pi * R_0**2
     denominator = ((omega_0**2 / omega**2) - 1)**2 + ((2 * beta_0 / omega) + epsilon)**2
     return numerator / denominator
