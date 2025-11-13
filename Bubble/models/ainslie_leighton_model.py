@@ -6,7 +6,7 @@ import os
 
 # Add parent directory to path for imports
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from model_specific_utils.ainslie_leighton_utils import compute_resonance_frequency, compute_viscous_damping, compute_thermal_damping, compute_dimensionless_correction, compute_resonance_frequency_correction, compute_scattering_cross_section_AL
+from model_specific_utils.ainslie_leighton_utils import compute_resonance_frequency, compute_damping_factors, compute_dimensionless_correction, compute_resonance_frequency_correction, compute_scattering_cross_section_AL
 
 
 def calculate_ainslie_leighton_ts(f, c, water, bubble):
@@ -35,21 +35,20 @@ def calculate_ainslie_leighton_ts(f, c, water, bubble):
     # Compute initial resonance frequency
     omega_0_initial = compute_resonance_frequency(bubble.gamma, water.P, water.rho, R_0)
 
-    # Compute damping factors
-    beta_viscous = compute_viscous_damping(water.mu, water.rho, R_0)
+    # Compute damping factors for initial frequency
+    D_thermal = bubble.K_th / (water.rho * water.cp)  # Thermal diffusivity
+    beta_viscous, beta_thermal, beta_0 = compute_damping_factors(bubble.gamma, water.mu, water.rho, R_0, D_thermal)
     epsilon_0 = compute_dimensionless_correction(omega_0_initial, R_0, c)
-    beta_thermal = compute_thermal_damping(bubble.gamma, bubble.K_th / (water.rho * water.cp), R_0, omega_0_initial)
-    beta_0 = beta_viscous + beta_thermal
 
     # Apply resonance frequency correction
     omega_0 = compute_resonance_frequency_correction(omega_0_initial, beta_0, epsilon_0)
 
-    # Compute scattering cross-section
+    # Compute scattering cross-section at actual frequency
     epsilon = compute_dimensionless_correction(omega, R_0, c)
-    beta_thermal = compute_thermal_damping(bubble.gamma, bubble.K_th / (water.rho * water.cp), R_0, omega)
-    beta_0 = beta_viscous + beta_thermal
+    # Recompute damping factors for actual frequency (thermal damping may be frequency dependent)
+    beta_viscous_freq, beta_thermal_freq, beta_0_freq = compute_damping_factors(bubble.gamma, water.mu, water.rho, R_0, D_thermal)
 
-    sigma_AL = compute_scattering_cross_section_AL(omega, omega_0, beta_0, epsilon, R_0)
+    sigma_AL = compute_scattering_cross_section_AL(omega, omega_0, beta_0_freq, epsilon, R_0)
 
     # Compute TS
     return 10 * np.log10(sigma_AL)

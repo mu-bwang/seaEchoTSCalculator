@@ -37,17 +37,17 @@ seaEchoTSCalculator/
 │   │   └── plots/            # Example plots
 │   ├── model_specific_utils/  # Model-specific utilities
 │   │   ├── ainslie_leighton_utils.py
-│   │   ├── aw_utils.py       # Anderson-Weston utilities
+│   │   ├── aw_utils.py       # Andreeva-Weston utilities
 │   │   ├── math_utils.py     # Mathematical utilities
-│   │   └── wm_utils.py       # Weston-Medwin utilities
+│   │   └── wm_utils.py       # Wildt-Medwin utilities
 │   └── models/               # 7 bubble TS models
 │       ├── ainslie_leighton_model.py
-│       ├── anderson_weston_model.py
+│       ├── andreeva_weston_model.py
 │       ├── breathing_model.py
 │       ├── medwin_clay_model.py
 │       ├── modal_solution.py
 │       ├── thuraisingham_model.py
-│       └── weston_medwin_model.py
+│       └── wildt_medwin_model.py
 ├── SolidSphere/               # Solid sphere TS calculations
 │   ├── core/                 # Core functionality
 │   │   └── io_utils.py      # I/O utilities and plotting

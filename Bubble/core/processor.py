@@ -27,8 +27,8 @@ from models.medwin_clay_model import calculate_medwin_clay_ts
 from models.breathing_model import calculate_breathing_ts
 from models.thuraisingham_model import calculate_thuraisingham_ts
 from models.modal_solution import calculate_modal_ts
-from models.weston_medwin_model import calculate_wm_ts
-from models.anderson_weston_model import calculate_aw_ts
+from models.wildt_medwin_model import calculate_wm_ts
+from models.andreeva_weston_model import calculate_aw_ts
 from models.ainslie_leighton_model import calculate_ainslie_leighton_ts
 
 MODEL_FUNCTIONS = {
@@ -36,8 +36,8 @@ MODEL_FUNCTIONS = {
     "Breathing": calculate_breathing_ts,
     "Thuraisingham": calculate_thuraisingham_ts,
     "Modal": calculate_modal_ts,
-    "Weston_Medwin": calculate_wm_ts,
-    "Anderson_Weston": calculate_aw_ts,
+    "Wildt_Medwin": calculate_wm_ts,
+    "Andreeva_Weston": calculate_aw_ts,
     "Ainslie_Leighton": calculate_ainslie_leighton_ts
 }
 

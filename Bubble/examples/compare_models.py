@@ -10,8 +10,8 @@ Models compared:
 • Breathing: Volume oscillation-focused model
 • Thuraisingham: Advanced theoretical approach
 • Modal: Modal analysis solution
-• Weston_Medwin: Weston-Medwin formulation  
-• Anderson_Weston: Anderson-Weston approach
+• Wildt_Medwin: Wildt-Medwin formulation  
+• Andreeva_Weston: Andreeva-Weston approach
 • Ainslie_Leighton: Ainslie-Leighton model
 
 Analysis details:
@@ -59,7 +59,7 @@ params = {
     "d": 2e-3,  # Bubble diameter in meters (2mm)
     
     # Models to compare (all 7 available models)
-    "models": ["Medwin_Clay", "Breathing", "Thuraisingham", "Modal", "Weston_Medwin", "Anderson_Weston", "Ainslie_Leighton"],
+    "models": ["Medwin_Clay", "Breathing", "Thuraisingham", "Modal", "Wildt_Medwin", "Andreeva_Weston", "Ainslie_Leighton"],
     
     # Seawater environmental parameters
     "T": 20.0,  # Temperature in Celsius
